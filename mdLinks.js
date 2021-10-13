@@ -18,7 +18,7 @@ const mdlinks = (userPath, options) => {
         let files = mdFiles(filesDirectory);
         let contentFiles= readFiles(files, returnPath);
         let link= linksFiles(contentFiles)
-        resolve ({filee : link})
+        resolve ({filee : link[0]})
       } else {
         if (pathExtName(userPath)){
           

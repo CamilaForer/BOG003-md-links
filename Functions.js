@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const markdownLinkExtractor = require('markdown-link-extractor')
 
 const existPath = (pathAbsolute) => fs.existsSync(pathAbsolute);
 const absolutePath = (userPath) => (path.isAbsolute(userPath) ? userPath : path.resolve(userPath));
@@ -24,16 +23,32 @@ const readFiles = (files, absPath) => {
 //Extraer links de los md 
 const linksFiles= (contentFiles) => {
  let links= []
- for (let index = 0; index < contentFiles.length; index++) {
-  links[index]=markdownLinkExtractor(contentFiles[index],false)
-  return links[index]
- }
-//  console.log(links)
-//  return links
+ let regExp=/(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm 
+ let regExpText=/\[(.*?)\]/g
+ contentFiles.forEach(file => {
+  let finalLinks= deleteExtra(file.match(regExp))
+  let finalText=deleteExtra(file.match(regExpText))
+  links.push({
+    "href" : finalLinks,
+    "text" : finalText,
+  })
+ });
+ return links
 };
 
+const deleteExtra= (links) =>{
+  let finalLinks=[]
+  links.forEach(link =>{
+  finalLinks.push(link.replace(/[\[\]\)]/g,""))
+  });
+  return finalLinks
+};
 
-
+// const build= (file, text, links)=>{
+//   links.forEach((link, index) => {
+    
+//   });
+// }
 
 
 
