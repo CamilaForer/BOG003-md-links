@@ -4,7 +4,8 @@ const fsPromise = require('fs').promises;
 const path = require('path');
 const { mdlinks } = require('./mdLinks.js')
 
-console.log( mdlinks('./md/', null))
+mdlinks("./md/", {validate:true}).then((e)=>console.log(e))
+.catch((error)=>console.log(error))
 
 // console.log(fs.readFileSync('./md/Otro.md',{ encoding: 'utf-8', flag: 'r' }))
 // Devuelve una matriz con los argumentos de la linea de comandos pasados 
